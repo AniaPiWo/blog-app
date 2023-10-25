@@ -1,0 +1,38 @@
+"use client";
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+type Props = {};
+
+export const AuthButton = (props: Props) => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    <button className="text-white bg-black p-4 cursor-pointer">
+      Loading...
+    </button>;
+  }
+
+  if (session) {
+    return (
+      <button
+        className="text-white bg-black p-4 cursor-pointer"
+        onClick={(e) => {
+          e.preventDefault();
+          signOut();
+        }}
+      >
+        Sign Out
+      </button>
+    );
+  }
+
+  return (
+    <button
+      className="text-white bg-black p-4 cursor-pointer"
+      onClick={() => signIn()}
+    >
+      Sign In
+    </button>
+  );
+};
