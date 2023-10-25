@@ -6,8 +6,16 @@ type Props = {};
 
 export const AuthButton = (props: Props) => {
   const { data: session, status } = useSession();
-
-  if (status === "loading") return <div>Loading...</div>;
+  console.log(`SESSION: ${JSON.stringify(session)}, STATUS: ${status}`);
+  if (status === "loading") {
+    return (
+      <div className="flex items-stretch">
+        <button className="text-white bg-black p-4 cursor-pointer">
+          Loading...
+        </button>
+      </div>
+    );
+  }
 
   if (session) {
     return (
