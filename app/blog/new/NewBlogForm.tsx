@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { createPost } from "@/app/actions/publishPost";
-import { Prisma } from "@prisma/client";
 
 type Props = {};
 
@@ -15,7 +14,6 @@ const NewBlogForm = (props: Props) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [postID, setPostID] = useState<number | null>(null);
 
   if (!session && status === "loading")
     return (
@@ -33,48 +31,46 @@ const NewBlogForm = (props: Props) => {
 
     if (!userId) return;
     try {
-      let newPost: Prisma.PostUncheckedCreateInput = {
-        title,
-        content,
-        authorId: userId,
-      };
-
-      const post = await createPost(newPost);
-      setPostID(post.id);
+      const post = await createPost({ title, content, authorId: userId });
+      console.log(post);
       setSubmitted(true);
-      handleSubmitedMsg();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleSubmitedMsg = () => {
-    if (submitted) {
-      return (
-        <main className="flex justify-center h-screen mt-20">
-          <h2 className="text-center text-violet-500 text-xl">
-            Your post has been submitted!
-          </h2>
-        </main>
-      );
-    }
-  };
+  if (submitted) {
+    return (
+      <main className="flex justify-center h-screen mt-20">
+        <h2 className="text-center text-violet-500 text-xl">Post submitted!</h2>
+      </main>
+    );
+  }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="flex justify-center h-screen mt-20">
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
         <input
           type="text"
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          placeholder="Title"
         />
         <textarea
           name="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          placeholder="Content"
         ></textarea>
-        <button type="submit">Create post</button>
+        <button
+          type="submit"
+          className="w-full bg-violet-500 text-white py-2 rounded-md hover:bg-violet-600 focus:outline-none focus:ring focus:bg-violet-600"
+        >
+          Create post
+        </button>
       </form>
     </div>
   );
