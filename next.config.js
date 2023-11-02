@@ -4,7 +4,7 @@ const nextConfig = {};
 module.exports = {
   ...nextConfig,
   images: {
-    domains: ["avatars.githubusercontent.com"],
+    domains: ["avatars.githubusercontent.com", "utfs.io"],
   },
   experimental: {
     serverActions: true,
