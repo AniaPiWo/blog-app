@@ -16,7 +16,6 @@ const page = async ({
       author: true,
     },
   });
-  console.log(post);
 
   return (
     <div className="container-sm mt-6">

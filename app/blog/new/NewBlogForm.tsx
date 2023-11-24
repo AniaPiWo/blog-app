@@ -5,18 +5,38 @@ import { createPost } from "@/app/actions/publishPost";
 import { UploadButton } from "@/app/utils/uploadthing";
 import "@uploadthing/react/styles.css";
 import Image from "next/image";
+import Confetti from "react-dom-confetti";
+import Button from "@/app/components/Button";
+
+/* type Props = {
+  blogCategories: Category[];
+}; */
 
 type Props = {};
 
 const NewBlogForm = (props: Props) => {
   const { data: session, status } = useSession();
   const user = session?.user?.name as any;
-  const userId = user?.id;
 
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const [submitted, setSubmitted] = useState<boolean>(false);
   const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [postID, setPostID] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const confettiConfig = {
+    angle: 90,
+    spread: 360,
+    startVelocity: 30,
+    elementCount: 50,
+    dragFriction: 0.1,
+    duration: 3000,
+    stagger: 0,
+    width: "10px",
+    height: "10px",
+    colors: ["#FF0000", "#00FF00", "#0000FF"],
+  };
 
   if (!session && status !== "loading")
     return (
@@ -33,9 +53,14 @@ const NewBlogForm = (props: Props) => {
     const userId = user?.id;
 
     if (!userId) return;
+
     try {
-      const post = await createPost({ title, content, authorId: userId });
-      console.log(post);
+      const post = await createPost({
+        title,
+        content,
+        authorId: userId,
+        imgURL: thumbnail,
+      });
       setSubmitted(true);
     } catch (error) {
       console.log(error);
@@ -95,13 +120,7 @@ const NewBlogForm = (props: Props) => {
             }}
           />
         </div>
-
-        <button
-          type="submit"
-          className=" w-full text-white bg-indigo-400 px-4 py-2 sm:px-6 sm:py-4 mt-6 border-2 rounded shadow-[0.25rem_0.25rem_0px_0px_rgba(0,0,0,1)]"
-        >
-          Create post
-        </button>
+        <Button className="w-full" text="Create Post" type="submit" />
       </form>
     </div>
   );
