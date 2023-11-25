@@ -7,7 +7,7 @@ type Props = {};
 
 const HeroSection = (props: Props) => {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-12 mt-6">
+    <section className="hero grid grid-cols-1 sm:grid-cols-12 mt-6">
       <div className="col-span-7 w-full place-self-center text-center sm:text-left justify-self-start">
         <h1 className="text-2xl sm:text-4xl md:text-6xl ms:leading-normal">
           Tech News for Busy Peeps

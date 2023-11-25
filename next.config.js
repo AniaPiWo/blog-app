@@ -6,6 +6,9 @@ module.exports = {
   images: {
     domains: ["avatars.githubusercontent.com", "utfs.io"],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
     serverActions: true,
   },

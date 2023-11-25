@@ -1,4 +1,5 @@
 import HeroSection from "./home/HeroSection";
+import Newsletter from "./home/Newsletter";
 import Posts from "./home/Posts";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
     <>
       <HeroSection />
       <Posts />
+      <Newsletter />
     </>
   );
 }

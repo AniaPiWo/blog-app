@@ -28,7 +28,7 @@ export const PostsList = (props: PostListProps) => {
     );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-4 mb-4">
       {props.posts.map((post: Post) => (
         <div
           key={post.id}
